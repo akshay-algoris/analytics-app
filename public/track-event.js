@@ -1,5 +1,5 @@
 (function () {
-    const analyticsEndpoint = "https://your-analytics-app-url/api/track";
+    const analyticsEndpoint = "https://analytics-iuvzjvfxc-akshayalgoris-projects.vercel.app/api/track";
 
     function sendEvent(eventName, eventData) {
         fetch(analyticsEndpoint, {

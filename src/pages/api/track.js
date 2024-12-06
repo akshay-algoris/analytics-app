@@ -1,3 +1,5 @@
+import { db, collection, addDoc } from '../../../firebaseConfig'
+
 export default async function handler(req, res) {
     // Set CORS headers for all requests
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -13,6 +15,14 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             const { event, data, timestamp, userAgent } = req.body;
+
+            await addDoc(collection(db, "analytics"), {
+                event,
+                data,
+                timestamp: timestamp || new Date().toISOString(),
+                userAgent, // Log the User-Agent
+                userAgent: req.headers["user-agent"], // Capture User-Agent
+            });
             console.log("Received Event:", { event, data, timestamp, userAgent });
             res.status(200).json({ message: "Event logged successfully" });
         } catch (error) {
